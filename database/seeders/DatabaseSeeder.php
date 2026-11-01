@@ -19,7 +19,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test@mail.com',
         ]);
+
+        $this->call([
+            DeveloperSeeder::class, 
+            GenreSeeder::class, 
+            PlatformSeeder::class, 
+            GameSeeder::class]);
     }
 }
