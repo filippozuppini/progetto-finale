@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Developer;
 use App\Models\Game;
+use App\Models\Genre;
+use App\Models\Platform;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GameController extends Controller
 {
@@ -23,7 +27,11 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        $genres = Genre::all();
+        $platforms = Platform::all();
+        $developers = Developer::all();
+
+        return view('admin.games.create', compact('genres', 'platforms', 'developers'));
     }
 
     /**
@@ -31,7 +39,40 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data= $request->all();
+
+        // dd($request->all());
+
+        $newGame = new Game();
+
+        $newGame->title = $data['title'];
+        $newGame->description = $data['description'];
+        $newGame->price = $data['price'];
+        $newGame->release_date = $data['release_date'];
+        $newGame->developer_id = $data['developer_id'];
+
+        if (isset($data['cover_image'])) {
+            
+            $img_path = Storage::putFile('/games' , $data['cover_image']); 
+
+            $newGame->cover_image = $img_path;
+        }
+
+        
+        $newGame->save();
+
+        
+        if (isset($data['genres'])) {
+            $newGame->genres()->attach($data['genres']);
+        }
+
+        if (isset($data['platforms'])) {
+            $newGame->platforms()->attach($data['platforms']);
+        }
+
+
+        return redirect()->route('admin.games.show', $newGame->id);
+
     }
 
     /**
