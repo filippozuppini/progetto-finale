@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\GenreController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->group(function () {
         Route::resource('games', GameController::class);
+        Route::resource('genres', GenreController::class);
     });
 
 require __DIR__.'/auth.php';
