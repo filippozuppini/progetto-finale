@@ -26,6 +26,6 @@
         <button type="submit" class="btn btn-primary">Crea genere</button>
     </form>
 
-</div>s
+</div>
 
 @endsection
