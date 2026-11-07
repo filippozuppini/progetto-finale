@@ -12,8 +12,12 @@
     >
 
 
-    <form action="{{ route("admin.games.store") }}" method="post" enctype="multipart/form-data">
+    <h1 class="mb-4">Modifica: {{ $game->title }}</h1>
+
+
+    <form action="{{ route('admin.games.update', $game) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
@@ -23,12 +27,13 @@
                 name="title"
                 id="title"
                 placeholder="Inserisci il titolo del gioco"
+                value="{{ $game->title }}"
             />
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
-            <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+            <textarea class="form-control" name="description" id="description" rows="3">{{ $game->description }}</textarea>
         </div>
 
         <div class="mb-3">
@@ -41,6 +46,7 @@
                 placeholder="Inserisci il prezzo del gioco"
                 min="0"
                 step="0.01"
+                value="{{ $game->price }}"
             />
         </div>
 
@@ -52,6 +58,7 @@
                 name="release_date"
                 id="release_date"
                 placeholder="Inserisci la data di rilascio"
+                value="{{ $game->release_date?->format('Y-m-d') }}"
             />
             
         </div>
@@ -63,9 +70,9 @@
                 name="developer_id"
                 id="developer_id"
             >
-                <option value="" selected>-- Seleziona --</option>
+                <option value="">-- Seleziona --</option>
                 @foreach ($developers as $developer)
-                    <option value="{{ $developer->id }}">{{ $developer->name }}</option>
+                    <option value="{{ $developer->id }}" {{ $game->developer_id == $developer->id ? 'selected' : '' }}>{{ $developer->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -84,6 +91,7 @@
                         name="genres[]"
                         id="genre-{{ $genre->id }}"
                         value="{{ $genre->id }}"
+                        {{ $game->genres->contains($genre->id) ? 'checked' : '' }}
                     />
                     <label class="form-check-label" for="genre-{{ $genre->id }}">{{ $genre->name }}</label>
                 </div>
@@ -107,6 +115,7 @@
                         name="platforms[]"
                         id="platform-{{ $platform->id }}"
                         value="{{ $platform->id }}"
+                        {{ $game->platforms->contains($platform->id) ? 'checked' : '' }}
                     />
                     <label class="form-check-label" for="platform-{{ $platform->id }}" ><i class="bi {{ $platform->icon }} me-2"></i>{{ $platform->name }}</label>
                 </div>    
@@ -119,12 +128,22 @@
 
             <div class="mb-3">
                 <label for="cover_image" class="form-label">Seleziona l'immagine di copertina</label>
+                
+                @if ($game->cover_image)
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $game->cover_image) }}" alt="copertina attuale" width="200">
+                    </div>
+                @endif
+
+                <div class="form-text">Lascia vuoto per non cambiare immagine</div>
+                
                 <input
                     type="file"
                     class="form-control"
                     name="cover_image"
                     id="cover_image"
                 />
+
             </div>
 
         </div>
@@ -133,9 +152,9 @@
 
         <button
             type="submit"
-            class="btn btn-primary"
+            class="btn btn-success mb-5"
         >
-            Crea
+            Salva modifiche
         </button>
         
         

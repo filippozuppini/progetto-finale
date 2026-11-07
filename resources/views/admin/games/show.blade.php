@@ -11,6 +11,8 @@
         ><i class="bi bi-arrow-left me-2"></i>Indietro</a
     >
 
+    <td><a class="btn btn-success" href={{ route('admin.games.edit', $game) }} role="button">Modifica</a></td>
+
     
     <div class="row align-items-md-stretch">
         <h1>{{ $game->title }}</h1>

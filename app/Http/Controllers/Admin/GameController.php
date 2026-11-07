@@ -88,7 +88,11 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $genres = Genre::all();
+        $platforms = Platform::all();
+        $developers = Developer::all();
+
+        return view('admin.games.edit', compact('game','genres', 'platforms', 'developers'));
     }
 
     /**
@@ -96,7 +100,29 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $data = $request->all();
+
+        $game->title= $data['title'];
+        $game->description = $data['description'];
+        $game->price = $data['price'];
+        $game->release_date = $data['release_date'];
+        $game->developer_id = $data['developer_id'];
+
+        if (isset($data['cover_image'])) {
+            $img_path = Storage::putFile('/games' , $data['cover_image']); 
+            $game->cover_image = $img_path;
+        }
+
+        $game->save();
+
+        
+        
+        $game->genres()->sync($data['genres'] ?? []);
+    
+        $game->platforms()->sync($data['platforms'] ?? []);
+
+        return redirect()->route('admin.games.show', $game->id);
+
     }
 
     /**
@@ -104,6 +130,9 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+
+        return redirect()->route('admin.games.index');
+
     }
 }
