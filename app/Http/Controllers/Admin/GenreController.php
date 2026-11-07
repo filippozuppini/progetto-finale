@@ -14,10 +14,9 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $genres = Genre::withCount('Genres')->orderBy('name')->get();
+        $genres = Genre::withCount('games')->orderBy('name')->get();
 
         return view('admin.genres.index', compact('genres'));
-
     }
 
     /**
@@ -25,7 +24,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.genres.create');
     }
 
     /**
@@ -33,13 +32,22 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newGenre = new Genre();
+
+        $newGenre->name = $data['name'];
+        $newGenre->color = $data['color'];
+
+        $newGenre->save();
+
+        return redirect()->route('admin.genres.show', $newGenre);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Genre $Genre)
+    public function show(Genre $genre)
     {
         return view('admin.genres.show', compact('genre'));
     }
@@ -47,24 +55,33 @@ class GenreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genre $Genre)
+    public function edit(Genre $genre)
     {
-        //
+        return view('admin.genres.edit', compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $Genre)
+    public function update(Request $request, Genre $genre)
     {
-        //
+        $data = $request->all();
+
+        $genre->name = $data['name'];
+        $genre->color = $data['color'];
+
+        $genre->save();
+
+        return redirect()->route('admin.genres.show', $genre);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $Genre)
+    public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+
+        return redirect()->route('admin.genres.index');
     }
 }
