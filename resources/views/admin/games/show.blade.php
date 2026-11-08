@@ -11,7 +11,7 @@
         ><i class="bi bi-arrow-left me-2"></i>Indietro</a
     >
 
-    <td><a class="btn btn-success" href={{ route('admin.games.edit', $game) }} role="button">Modifica</a></td>
+    <a class="btn btn-success" href={{ route('admin.games.edit', $game) }} role="button">Modifica</a>
 
     
     <div class="row align-items-md-stretch">
@@ -29,24 +29,32 @@
                 
                 <p><b>Descrizione:</b>  {{ $game->description }}</p>
                 <p><b>Sviluppatore:</b> {{ $game->developer->name ?? 'Nome non disponibile' }}</p>
-                <p><b>Data di rilascio:</b> {{ $game->release_date->format('d-m-Y') }}</p>
+                <p><b>Data di rilascio:</b> {{ $game->release_date?->format('d-m-Y') }}</p>
 
-
-
-                <div class="tags d-flex">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                     <p><b>Etichette:</b></p>
+
+                    @forelse ($game->genres as $genre)
+                        <span class="badge rounded-pill" style="background-color: {{ $genre->color }}">{{ $genre->name }}</span>
+                    @empty
+                        <span class="text-muted">Nessun genere</span>
+                    @endforelse
 
                 </div>
 
+                <div class="d-flex gap-3">
+                    <p><b>Piattaforme: </b></p>
+                    @forelse ($game->platforms as $platform)
+
+                        <i class="bi {{ $platform->icon }}"></i>
+
+                        
+                    @empty
+                        
+                    @endforelse
+                </div>
+
             </div>
-        </div>
-    </div>
-
-    <div class="align-items-md-stretch">
-        <div class="col-md-12  border rounded-3 m-5">
-
-            <h1>{{ $game->title }}</h1>
-
         </div>
     </div>
 

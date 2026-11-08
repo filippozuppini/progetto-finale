@@ -37,7 +37,7 @@
                         <td>{{ $game->title }}</td>
                         <td>{{ $game->developer->name ?? 'Nome non disponibile' }}</td>
                         <td>€ {{ $game->price }}</td>
-                        <td>{{ $game->release_date->format('d/m/Y') }}</td>
+                        <td>{{ $game->release_date?->format('Y-m-d')  }}</td>
                         <td><a class="btn btn-primary" href={{ route('admin.games.show', $game) }} role="button">Dettaglio</a></td>
                         <td><a class="btn btn-success" href={{ route('admin.games.edit', $game) }} role="button">Modifica</a></td>
                         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $game->id }}">Elimina</button></td>
