@@ -46,6 +46,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/') }}">{{ __('Home') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('admin/games') }}">{{ __('Libreria') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('admin/developers') }}">{{ __('Sviluppatori') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('admin/platforms') }}">{{ __('Piattaforme') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('admin/genres') }}">{{ __('Generi') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

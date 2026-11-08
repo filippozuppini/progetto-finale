@@ -8,7 +8,7 @@
     
     <div class="head row">
         
-        <h1>Giochi</h1>
+        <h1>Libreria Giochi</h1>
         <div class="col-md flot">
             <a href="{{ route('admin.games.create') }}" class="btn btn-primary float-end">Aggiungi gioco</a>
         </div>

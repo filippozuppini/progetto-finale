@@ -27,7 +27,7 @@
 
         <div class="mb-3">
             <label for="country" class="form-label">Cittá</label>
-            <input type="text" class="form-control" name="country" id="country" value="{{ $developer->email }}">
+            <input type="text" class="form-control" name="country" id="country" value="{{ $developer->country }}">
         </div>
 
         <button type="submit" class="btn btn-success">Aggiorna</button>

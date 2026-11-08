@@ -10,6 +10,7 @@ class DashboardController extends Controller
 {
     public function index() {
 
+        return redirect()->route('admin.games.index');
 
     }
 }
